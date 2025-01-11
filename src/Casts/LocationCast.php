@@ -34,6 +34,10 @@ class LocationCast implements CastsAttributes, SerializesCastableAttributes
 
     public function set($model, string $key, $value, array $attributes): Expression
     {
+        if (is_null($value)) {
+            return DB::raw('null');
+        }
+        
         if (!$value instanceof Point) {
             throw new InvalidArgumentException(
                 sprintf('The %s field must be instance of %s', $key, Point::class)
